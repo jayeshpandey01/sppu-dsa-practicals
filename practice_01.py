@@ -20,7 +20,7 @@ def Maximum(l):
 def absentCnt(l):
     cnt = 0
     for i in range(len(l)):
-        if l[i] != -999:
+        if l[i] == -999:
             cnt += 1
     return cnt
 
