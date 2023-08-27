@@ -24,75 +24,67 @@ Conditions for placing the values in the matrix in appropriate manner (CIRCULAR 
    3. If the calculated row position is -1 & calculated column position is n, the new position would be: (0, n-2).
 '''
 
-
-# A function to generate odd
-# sized magic squares
-
-def generate_Magic_Square(size):
-    magicSquare=[[0 for x in range(size)] for y in range(size)]
+def generate_magic_square(size):
+    magic_square = [[0 for _ in range(size)] for _ in range(size)]
 
     # Initializing first position of matrix
-    i=size/2
-    j=size-1
+    i = size // 2
+    j = size - 1
 
-    # Fill the magic square by placing values at appropriate position
-    num=1
-    while num<=(size*size):
-        if i==-1 and j==size:  # 3rd Condition
-            j=size-2
-            i=0
+    # Fill the magic square by placing values at appropriate positions
+    num = 1
+    while num <= (size * size):
+        if i == -1 and j == size:  # 3rd Condition
+            j = size - 2
+            i = 0
         else:
             # next number goes out of right side of square
-            if j==size:
-                j=0
+            if j == size:
+                j = 0
 
             # next number goes out of upper side
-            if i<0:
-                i=size-1
+            if i < 0:
+                i = size - 1
 
-        if magicSquare[int(i)][int(j)]:  # 2nd condition
-            j=j-2
-            i=i+1
+        if magic_square[i][j]:  # 2nd condition
+            j -= 2
+            i += 1
             continue
         else:
-            magicSquare[int(i)][int(j)]=num
-            num=num+1
+            magic_square[i][j] = num
+            num += 1
 
-        j=j+1
-        i=i-1  # 1st condition
+        j += 1
+        i -= 1  # 1st condition
 
-    # Printing of magic square
-    sum=size*(size*size+1)/2
-    print("Sum of each row or column is : ",sum)
-    print("Magic Square of size",size,"*",size,"is : \n")
+    # Printing the magic square
+    sum_row_column = size * (size * size + 1) // 2
+    print("Sum of each row or column is:", sum_row_column)
+    print("Magic Square of size", size, "*", size, "is:\n")
 
-    for i in range(0,size):
-        for j in range(0,size):
-            print(' %2d ' % (magicSquare[i][j]),end=' | ')
+    for i in range(size):
+        for j in range(size):
+            print(' %2d ' % (magic_square[i][j]), end=' | ')
 
             # To display magic square in matrix form
-            if j==size-1:
+            if j == size - 1:
                 print()
 
-#<------------------------------------------------------------------------------------------------->
+def main():
+    flag = True
+    while flag:
+        n = int(input("\nEnter the size of the MAGIC SQUARE: "))
+        if n % 2 == 0:
+            s = int(input("Please enter an ODD Number (for example - 3, 5, 7, 9, ...): "))
+            generate_magic_square(s)
+        else:
+            generate_magic_square(n)
+        a = input("\nDo you want to print a Magic Square of some other size (yes/no): ")
+        if a == 'yes':
+            flag = True
+        else:
+            flag = False
+            print("\nThanks for using this program!")
 
-#Main function
-
-flag=1
-while flag==1:
-    n=int(input("\nEnter the size of the MAGIC SQUARE : "))
-    if n%2==0:
-        s=int(input("Please enter an ODD Number (for example - 3,5,7,9,....) : "))
-        generate_Magic_Square(s)
-    else:
-        generate_Magic_Square(n)
-    a=input("\nDo you want to print Magic Square of some other size (yes/no) : ")
-    if a=='yes':
-        flag=1
-    else:
-        flag=0
-        print("\nThanks for using this program!")
-
-#<------------------------------------------ END OF PROGRAM ----------------------------------------->
-
-
+if __name__ == "__main__":
+    main()
