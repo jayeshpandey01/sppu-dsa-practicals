@@ -7,29 +7,24 @@ Experiment No. 9 : Write a Python Program to compute following computation on ma
                    c)Multiplication of two matrices
                    d)Transpose of a matix
 '''
-
 import numpy
 
-# initializing matrices
+# Initializing matrices
 x = numpy.array([[1, 2], [4, 5]])
 y = numpy.array([[7, 8], [9, 10]])
 
-# using add() to add matrices
-print("The element wise addition of matrix is : ")
+# Using add() to add matrices
+print("The element-wise addition of matrices is:")
 print(numpy.add(x, y))
 
-# using subtract() to subtract matrices
-print("The element wise subtraction of matrix is : ")
+# Using subtract() to subtract matrices
+print("The element-wise subtraction of matrices is:")
 print(numpy.subtract(x, y))
 
-# using dot() to multiply matrices
-print ("The product of matrices is : ")
-print (numpy.dot(x,y))
+# Using dot() to multiply matrices
+print("The matrix multiplication (dot product) result is:")
+print(numpy.dot(x, y))
 
-
-# using "T" to transpose the matrix
-print("The transpose of given matrix is : ")
+# Using "T" to transpose the matrix
+print("The transpose of the given matrix x is:")
 print(x.T)
-
-
-# Created by ATHARVA PAWAR
