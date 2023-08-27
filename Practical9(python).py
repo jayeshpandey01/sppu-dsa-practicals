@@ -1,6 +1,4 @@
 '''
-This program is created by ATHARVA PAWAR
-
 Experiment No. 9 : Write a Python Program to compute following computation on matrices :
                    a)Addition of two matrices
                    b)Subtraction of two matrices
