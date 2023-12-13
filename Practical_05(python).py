@@ -5,29 +5,54 @@
 # d) To display index of first appearance of the substring
 # e) To count the occurrences of each word in a given string
 
+def display_longest_word(input_string):
+    words = input_string.split()
+    longest_word = max(words, key=len)
+    print(f"The longest word is: {longest_word}")
+
+def frequency_of_character(input_string, char):
+    char_frequency = input_string.count(char)
+    print(f"The frequency of '{char}' in the string is: {char_frequency}")
+
+def is_palindrome(input_string):
+    reversed_string = input_string[::-1]
+    if input_string == reversed_string:
+        print("The string is a palindrome.")
+    else:
+        print("The string is not a palindrome.")
+
+def index_of_substring(input_string, substring):
+    index = input_string.find(substring)
+    if index != -1:
+        print(f"The index of the first appearance of '{substring}' is: {index}")
+    else:
+        print(f"'{substring}' not found in the string.")
+
+def count_word_occurrences(input_string):
+    words = input_string.split()
+    word_count = {}
+    
+    for word in words:
+        word_count[word] = word_count.get(word, 0) + 1
+
+    print("Word occurrences:")
+    for word, count in word_count.items():
+        print(f"{word}: {count} times")
+
 def main():
-    string = input('Enter string : ')
-    stringfreq = dict()
+    input_string = input("Enter a string: ")
 
-    for i in string:
-        stringfreq[i] = stringfreq.get(i, 0) + 1
-    stringfreqword = dict()
+    display_longest_word(input_string)
+    
+    char_to_find = input("Enter a character to find its frequency: ")
+    frequency_of_character(input_string, char_to_find)
 
-    for i in string.split():
-        stringfreqword[i] = stringfreqword.get(i, 0) + 1
+    is_palindrome(input_string)
 
-    print(f'\nWord with maximum length : {max(string.split(), key=len)}')
-    print(f'\nFrequency of each character :')
-    print(stringfreq)
+    substring_to_find = input("Enter a substring to find its index: ")
+    index_of_substring(input_string, substring_to_find)
 
-    pali = input('\nEnter a string to check Palindrome: ')
-    print(f"Given string is {'not ' if pali != pali[::-1] else ''}a palindrome.\n")
-
-    print(f"First occurrence of given substring is at index : {string.index(input('Enter substring to be searched : '))}")
-
-    print(f'\nFrequency of each word :')
-    print(stringfreqword)
-
+    count_word_occurrences(input_string)
 
 if __name__ == "__main__":
     main()
