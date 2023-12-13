@@ -6,69 +6,94 @@ using stack based on given conditions:
 3. Only '+', '-', '*' and '/ ' operators are expected.
 
   '''
-for(int i = 0; i < expression.length(); i++) {
+#include <iostream>
+#include <stack>
+#include <cctype>
 
-    if(expression[i] == ' ' || expression[i] == ',') continue;
+using namespace std;
 
-    else if(isOperator(expression[i])) {
-
-        int operand2 = S.top(); S.pop();
-        int operand1 = S.top(); S.pop();
-
-        int result = performOperation(expression[i], operand1, operand2);
-
-        S.push(result);
-    }
-    else if(isdigit(expression[i])){
-
-        int operand = 0;
-        while(i<expression.length() && isdigit(expression[i])) {
-
-            operand = (operand*10) + (expression[i]-'0');
-            i++;
-        }
-
-        i--;
-        S.push(operand);
-    }
+int precedence(char op) {
+    if (op == '+' || op == '-')
+        return 1;
+    if (op == '*' || op == '/')
+        return 2;
+    return 0;
 }
 
-return S.top();
-
- // If operand, add to postfix
-    if(isdigit(expression[i])) {
-        postfix += expression[i];
-    }
-
-    else if(expression[i] == ' ' || expression[i] == ',') {
-        continue;
-    }
-
-    else if(isOperator(expression[i])) {
-        while(!S.empty() && S.top()!= '(' && hasHigherPrecedence(S.top(),expression[i])) {
-            postfix+= S.top();
-            S.pop();
-        }
-
-        S.push(expression[i]);
-    }
-
-    else if(expression[i] == '(') {
-        S.push(expression[i]);
-    }
-
-    else if(expression[i] == ')') {
-        while(!S.empty() && S.top() !=  '(') {
-            postfix+= S.top();
-            S.pop();
-        }
-        S.pop();
-    }
+bool isOperator(char ch) {
+    return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
 }
 
-while(!S.empty()) {
-    postfix += S.top();
-    S.pop();
+bool isOperand(char ch) {
+    return isalnum(ch);
 }
 
-return postfix;
+string infixToPostfix(const string& infix) {
+    stack<char> s;
+    string postfix = "";
+
+    for (char ch : infix) {
+        if (isOperand(ch)) {
+            postfix += ch;
+        } else if (ch == '(') {
+            s.push(ch);
+        } else if (ch == ')') {
+            while (!s.empty() && s.top() != '(') {
+                postfix += s.top();
+                s.pop();
+            }
+            s.pop(); // Pop '('
+        } else if (isOperator(ch)) {
+            while (!s.empty() && precedence(s.top()) >= precedence(ch)) {
+                postfix += s.top();
+                s.pop();
+            }
+            s.push(ch);
+        }
+    }
+
+    while (!s.empty()) {
+        postfix += s.top();
+        s.pop();
+    }
+
+    return postfix;
+}
+
+int evaluatePostfix(const string& postfix) {
+    stack<int> s;
+
+    for (char ch : postfix) {
+        if (isOperand(ch)) {
+            s.push(ch - '0'); // Convert char to int
+        } else if (isOperator(ch)) {
+            int operand2 = s.top();
+            s.pop();
+            int operand1 = s.top();
+            s.pop();
+
+            switch (ch) {
+                case '+': s.push(operand1 + operand2); break;
+                case '-': s.push(operand1 - operand2); break;
+                case '*': s.push(operand1 * operand2); break;
+                case '/': s.push(operand1 / operand2); break;
+            }
+        }
+    }
+
+    return s.top();
+}
+
+int main() {
+    string infixExpression;
+    cout << "Enter infix expression: ";
+    cin >> infixExpression;
+
+    string postfixExpression = infixToPostfix(infixExpression);
+    cout << "Postfix expression: " << postfixExpression << endl;
+
+    int result = evaluatePostfix(postfixExpression);
+    cout << "Result after evaluation: " << result << endl;
+
+    return 0;
+}
